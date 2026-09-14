@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: coretalk-relay
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ACCESS_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: DEBUG_PROTOCOL
+        value: "1"
+      - key: TEXT_MODEL
+        value: gpt-5-mini
+      - key: STT_MODEL
+        value: gpt-4o-mini-transcribe
+      - key: TTS_MODEL
+        value: gpt-4o-mini-tts
+      - key: TTS_VOICE
+        value: alloy
